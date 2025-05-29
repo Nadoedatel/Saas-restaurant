@@ -15,6 +15,13 @@ async function handleTableClick(index: number) {
 
   const result = await modal.open('bookTable', { tableId: index + 1 })
 
+
+  const res = await fetch('http://localhost:3000/api/bookings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  console.log(res)
+
   if (result?.success) {
     tables.value[index].isBusy = true
   }
