@@ -10,13 +10,26 @@ const phone = ref('')
 const time = ref('')
 
 // Фейковое бронирование
-function submit() {
+async function submit() {
   if (!name.value || !phone.value || !time.value) {
     alert('Заполните все поля')
     return
   }
 
-  modal.close({ success: true, name: name.value, phone: phone.value, time: time.value })
+  const res = await fetch('http://localhost:3000/api/bookings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      tableId,
+      name: name.value,
+      phone: phone.value,
+      time: time.value
+    })
+  })
+  const data = await res.json()
+  console.log(data);
+  
+  if (data.success) modal.close({ success: true })
 }
 </script>
 
