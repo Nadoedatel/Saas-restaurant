@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
 
   try {
     const booking = await prisma.booking.findUnique({
-      where: { id: bookingId },
+      where: { token: bookingId },
     });
 
     if (!booking) {

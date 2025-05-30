@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 
 const route = useRoute();
-const tableId = route.params.tableId;
+const token = route.params.token;
 
 const name = ref('');
 const phone = ref('');
@@ -12,8 +12,9 @@ const message = ref('');
 
 const checkIn = async () => {
   try {
+    console.log(token)
     const response = await axios.post('http://localhost:3000/api/checkIn', {
-      bookingId: tableId,
+      bookingId: token,
       name: name.value,
       phone: phone.value,
     });

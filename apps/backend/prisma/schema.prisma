@@ -14,7 +14,7 @@ model Booking {
   phone     String
   time      DateTime
   tableNumber Int
-  token       String   @default(uuid()) 
+  token       String   @unique @default(uuid()) 
   isConfirmed Boolean  @default(false)
   createdAt DateTime @default(now())
 }
