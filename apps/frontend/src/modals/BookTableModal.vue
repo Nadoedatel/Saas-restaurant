@@ -24,10 +24,11 @@ async function submit() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      tableId,
+      tableNumber: tableId,
       name: name.value,
       phone: phone.value,
-      time: dateTime
+      time: dateTime,
+
     })
   })
   const data = await res.json()

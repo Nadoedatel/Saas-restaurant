@@ -1,23 +1,33 @@
-
-import express from 'express'
-import prisma from '../prisma'
+import express from "express"
+import prisma from "../prisma" // Подключаем клиент Prisma — для работы с базой
+import QRCode from "qrcode"    // Библиотека для генерации QR-кодов
 
 const router = express.Router()
 
-router.post('/', async (req, res) => {
-  const { name, phone, time } = req.body
+// POST-запрос на создание бронирования
+router.post("/", async (req, res) => {
+  // Получаем данные из формы
+  const { name, phone, time, tableNumber } = req.body
+  const parsedTime = new Date(time) // Преобразуем строку времени в объект Date
 
-  const parsedTime = new Date(time);
-  
   try {
+    // Создаём запись в базе данных
     const booking = await prisma.booking.create({
-      data: { name, phone, time: parsedTime },
+      data: { name, phone, time: parsedTime, tableNumber },
     })
-    res.status(201).json(booking)
+
+    // // Генерируем URL для QR-кода (пользователь потом по нему перейдёт)
+    // const qrUrl = `http://localhost:5173/checkIn/${booking.id}`
+
+    // // Генерируем QR в виде изображения (data URL)
+    // const qrCode = await QRCode.toDataURL(qrUrl)
+
+    // Отправляем обратно созданную запись и QR-код
+    res.status(201).json({ booking })
   } catch (e) {
     console.error(e)
-    res.status(500).json({ error: 'Ошибка при бронировании' })
+    res.status(500).json({ error: "Ошибка при бронировании" })
   }
 })
 
-export default router
+export default router // Экспортируем роутер, чтобы использовать в index.ts

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import BookTableView from '@/views/BookTableView.vue'
+import CheckIn from '@/views/CheckIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,11 @@ const router = createRouter({
       name: 'bookTable',
       component: BookTableView,
     },
+    {
+      path: '/checkIn/:token',
+      name: 'checkIn',
+      component: CheckIn,
+    }
   ],
 })
 

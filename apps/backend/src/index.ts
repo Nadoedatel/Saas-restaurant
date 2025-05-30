@@ -1,29 +1,24 @@
-import express from 'express'
-import cors from 'cors'
-import bookingsRouter from './routes/bookings'
-import QRCode from 'qrcode';
+import express from 'express' // Подключаем Express — фреймворк для создания сервера
+import cors from 'cors'       // Позволяет принимать запросы с другого домена (для связи фронта и бэка)
+import bookingsRouter from './routes/bookings' // Импортируем отдельный файл, где логика бронирования
+import checkIn from './routes/checkIn'
 
-const app = express()
-const PORT = process.env.PORT || 3000
+const app = express() // Создаём приложение Express
+const PORT = process.env.PORT || 3000 // Указываем порт, можно задать через .env
 
-const qrUrl = `api/check-in/${booking.token}`;
-const qrCodeDataUrl = await QRCode.toDataURL(qrUrl);
-app.use(cors())
-app.use(express.json())
-app.use('/api/bookings', bookingsRouter)
+app.use(cors()) // Включаем CORS, чтобы фронтенд мог обращаться к серверу
+app.use(express.json()) // Позволяет Express понимать JSON в теле запроса (req.body)
+
+app.use('/api/bookings', bookingsRouter) 
+app.use('/api/checkIn', checkIn) 
+// Все запросы на /api/bookings идут в файл routes/bookings.ts
 
 app.get('/api/ping', (_req, res) => {
+  // Простой тестовый эндпоинт для проверки, жив ли сервер
   res.json({ message: 'pong' })
 })
 
-app.post('/api/bookings', (req, res) => {
-  const { tableId, name, phone, time } = req.body
-  console.log('New booking:', req.body)
-  // В будущем — сохранить в базу данных
-  res.status(201).json({ success: true })
-})
-
-
 app.listen(PORT, () => {
+  // Запускаем сервер и слушаем указанный порт
   console.log(`Server running on http://localhost:${PORT}`)
 })
