@@ -1,10 +1,3 @@
-<!-- src/ModalManager.vue -->
-<template>
-  <BaseModal v-if="current && modalComponent" :close="close">
-    <component :is="modalComponent" />
-  </BaseModal>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useModalStore } from '@/stores/modal'
@@ -32,3 +25,10 @@ const modalComponent = computed(() => {
 
 const close = () => modal.close()
 </script>
+
+
+<template>
+  <BaseModal v-if="current && modalComponent" :close="close">
+    <component :is="modalComponent" />
+  </BaseModal>
+</template>
