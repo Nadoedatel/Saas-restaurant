@@ -21,9 +21,8 @@ router.post("/", async (req, res) => {
 
     // Генерируем QR в виде изображения (data URL)
     const qrCode = await QRCode.toDataURL(qrUrl)
-
     // Отправляем обратно созданную запись и QR-код
-    res.status(201).json({ booking, qrCode })
+    res.status(201).json({ booking, qrCode, success: true })
   } catch (e) {
     console.error(e)
     res.status(500).json({ error: "Ошибка при бронировании" })

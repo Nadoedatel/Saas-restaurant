@@ -9,9 +9,10 @@ const PORT = process.env.PORT || 3000 // Указываем порт, можно
 app.use(cors()) // Включаем CORS, чтобы фронтенд мог обращаться к серверу
 app.use(express.json()) // Позволяет Express понимать JSON в теле запроса (req.body)
 
+// Все запросы на /api/bookings идут в файл routes/bookings.ts
 app.use('/api/bookings', bookingsRouter) 
 app.use('/api/checkIn', checkIn) 
-// Все запросы на /api/bookings идут в файл routes/bookings.ts
+
 
 app.get('/api/ping', (_req, res) => {
   // Простой тестовый эндпоинт для проверки, жив ли сервер
