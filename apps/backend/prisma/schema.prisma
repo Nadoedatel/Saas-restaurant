@@ -17,4 +17,15 @@ model Booking {
   token       String   @unique @default(uuid()) 
   isConfirmed Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  table       Table    @relation(fields: [tableId], references: [id])
+  tableId     Int
+}
+
+model Table {
+  id        Int      @id @default(autoincrement())
+  number    Int      @unique  
+  isOccupied Boolean @default(false) 
+  token     String   @unique @default(uuid()) 
+  bookings  Booking[]             
 }

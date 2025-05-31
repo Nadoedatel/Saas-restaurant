@@ -16,14 +16,14 @@ router.post("/", async (req, res) => {
       data: { name, phone, time: parsedTime, tableNumber },
     })
 
-    // // Генерируем URL для QR-кода (пользователь потом по нему перейдёт)
-    // const qrUrl = `http://localhost:5173/checkIn/${booking.id}`
+    // Генерируем URL для QR-кода (пользователь потом по нему перейдёт)
+    const qrUrl = `http://localhost:5173/checkIn/${booking.id}`
 
-    // // Генерируем QR в виде изображения (data URL)
-    // const qrCode = await QRCode.toDataURL(qrUrl)
+    // Генерируем QR в виде изображения (data URL)
+    const qrCode = await QRCode.toDataURL(qrUrl)
 
     // Отправляем обратно созданную запись и QR-код
-    res.status(201).json({ booking })
+    res.status(201).json({ booking, qrCode })
   } catch (e) {
     console.error(e)
     res.status(500).json({ error: "Ошибка при бронировании" })
