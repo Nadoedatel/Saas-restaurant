@@ -11,9 +11,19 @@ router.post("/", async (req, res) => {
   const parsedTime = new Date(time) // Преобразуем строку времени в объект Date
 
   try {
+     // 1. Находим нужный стол по номеру
+    const table = await prisma.table.findUnique({
+      where: { number: tableNumber },
+    })
+  
     // Создаём запись в базе данных
     const booking = await prisma.booking.create({
-      data: { name, phone, time: parsedTime, tableNumber },
+      data: { name, phone, time: parsedTime, tableNumber, tableId: table?.id, },
+    })
+    
+    await prisma.table.update({
+      where: { id: table?.id },
+      data: { isOccupied: true },
     })
 
     // Генерируем URL для QR-кода (пользователь потом по нему перейдёт)

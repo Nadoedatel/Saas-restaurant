@@ -1,7 +1,8 @@
 import express from 'express' // Подключаем Express — фреймворк для создания сервера
 import cors from 'cors'       // Позволяет принимать запросы с другого домена (для связи фронта и бэка)
 import bookingsRouter from './routes/bookings' // Импортируем отдельный файл, где логика бронирования
-import checkIn from './routes/checkIn'
+import checkInRouter from './routes/checkIn'
+import tablesRouter from './routes/tables'
 
 const app = express() // Создаём приложение Express
 const PORT = process.env.PORT || 3000 // Указываем порт, можно задать через .env
@@ -11,8 +12,8 @@ app.use(express.json()) // Позволяет Express понимать JSON в �
 
 // Все запросы на /api/bookings идут в файл routes/bookings.ts
 app.use('/api/bookings', bookingsRouter) 
-app.use('/api/checkIn', checkIn) 
-
+app.use('/api/checkIn', checkInRouter) 
+app.use('/api/tables', tablesRouter)
 
 app.get('/api/ping', (_req, res) => {
   // Простой тестовый эндпоинт для проверки, жив ли сервер
