@@ -7,8 +7,13 @@ import axios from 'axios'
 import router from '@/router'
 import { useModalStore } from '@/stores/modal'
 
+interface Table {
+  id: number;
+  number: number;
+  isOccupied: boolean;
+}
 // Храним список всех столов
-const tables = ref([])
+const tables = ref<Table[]>([])
 const modal = useModalStore()
 
 // Загружаем столы при загрузке компонента
