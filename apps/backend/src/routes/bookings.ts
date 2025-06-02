@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
   
     // Создаём запись в базе данных
     const booking = await prisma.booking.create({
-      data: { name, phone, time: parsedTime, tableNumber, tableId: table?.id, },
+      data: { name, phone, time: parsedTime, tableNumber, token: table?.token, tableId: table?.id, },
     })
     
     await prisma.table.update({
