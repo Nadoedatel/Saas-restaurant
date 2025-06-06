@@ -23,7 +23,7 @@ onMounted(async () => {
     <img :src="Rectangle30" alt="Интерьер ресторана" class="mx-auto mb-4"/>
 
     <hr class="my-4 border-[#F49B33]">
-    <h2 class="text-lg font-medium mb-4">Выберите места!:</h2>
+    <h2 class="text-lg font-medium mb-4">Выберите места:</h2>
 
     <table-item :tables/>
   </div>
