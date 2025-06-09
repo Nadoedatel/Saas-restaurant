@@ -4,10 +4,8 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import TableItem from "@/components/TableItem.vue";
 
-// Храним список всех столов
 const tables = ref([])
 
-// Загружаем столы при загрузке компонента
 onMounted(async () => {
   const res = await axios.get('http://localhost:3000/api/tables')
   tables.value = res.data
@@ -19,7 +17,6 @@ onMounted(async () => {
     <h1 class="text-2xl font-semibold mb-2">Забронировать стол</h1>
     <hr class="my-4 border-[#F49B33]">
 
-    <!-- Картинка интерьера -->
     <img :src="Rectangle30" alt="Интерьер ресторана" class="mx-auto mb-4"/>
 
     <hr class="my-4 border-[#F49B33]">
