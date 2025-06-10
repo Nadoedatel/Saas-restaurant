@@ -17,17 +17,77 @@ interface Media {
   'media-metadata': MediaMetaDate[];
 }
 
+interface articleResult {
+  uri: string;
+  url: string;
+  id: number;
+  asset_id: number;
+  source: string;
+  published_date: string;
+  updated: string;
+  section: string;
+  subsection: string;
+  nytdsection: string;
+  adx_keywords: string;
+  column: string | null;
+  byline: string;
+  type: string;
+  title: string;
+  abstract: string;
+  des_facet: string[];
+  org_facet: string[];
+  per_facet: string[];
+  geo_facet: string[];
+  'media' : Media[];
+  eta_id: number;
+}
+
+interface NewYorkTimesApiResponse {
+  status: string;
+  copyright: string;
+  num_results: number;
+  results: articleResult[];
+}
+
 const key = 'Dice4J9RmneDUcys6LHEe2ul7YGPmptD'
 const nameArticle = ref("")
 
 
-function receivingNews() {
+async function receivingNews(): Promise<articleResult[]> {
+  const apiUrl = `https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=${key}`
+
   try {
-    const test = axios(`https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=${key}`)
-        .then(res => res.data)
-        .then(res => console.log(res))
-  } catch(err) {
-    console.error(err)
+    const response = await axios.get<NewYorkTimesApiResponse>(apiUrl)
+
+    const apiData = response.data
+
+    if (apiData.status === 'OK') {
+      console.log("Данные успешно получены!");
+      console.log(apiData);
+      return apiData.results;
+    } else {
+      console.warn("API вернуло статус не 'OK' или нет результатов.");
+      return [];
+    }
+
+  } catch(error) {
+    if (axios.isAxiosError(error)) {
+      console.error(`Ошибка при запросе к API: ${error.message}`);
+      if (error.response) {
+        // Сервер ответил со статусом, отличным от 2xx
+        console.error(`Статус ответа: ${error.response.status}`);
+        console.error(`Данные ответа:`, error.response.data);
+      } else if (error.request) {
+        // Запрос был сделан, но ответа не получено
+        console.error("Запрос был сделан, но ответа не получено.");
+      } else {
+        // Что-то пошло не так при настройке запроса
+        console.error("Ошибка при настройке запроса:", error.message);
+      }
+    } else {
+      console.error("Неизвестная ошибка:", error);
+    }
+    return [];
   }finally {
     console.log("Completely")
   }
