@@ -33,7 +33,7 @@ const checkIn = async () => {
     <h2 class="text-xl font-semibold mb-4">Подтвердите бронирование</h2>
     <my-input v-model="name" placeholder="Имя" />
     <my-input v-model="phone" placeholder="Телефон"/>
-    <my-button @click="checkIn" class="btn btn-primary w-full">Подтвердить</my-button>
+    <my-button @click="checkIn">Подтвердить</my-button>
     <p class="mt-4 text-center">{{ message }}</p>
   </div>
 </template>

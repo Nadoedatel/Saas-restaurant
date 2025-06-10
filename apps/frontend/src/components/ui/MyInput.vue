@@ -9,5 +9,6 @@ const props = defineProps({
   <input
       v-model="model"
       :placeholder="props.placeholder"
-      class="border-1 rounded-2xl p-2 mb-5 w-full">
+      class="border-1 rounded-2xl p-2 mb-5 w-full"
+  >
 </template>
