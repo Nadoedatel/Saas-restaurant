@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import MyInput from "@/components/ui/MyInput.vue";
 import MyButton from "@/components/ui/MyButton.vue";
+import {checkBookings} from "@/constants/links/API.ts";
 
 const route = useRoute();
 const token = route.params.token;
@@ -15,7 +16,7 @@ const message = ref('');
 const checkIn = async () => {
   try {
     console.log(token)
-    const response = await axios.post('http://localhost:3000/api/checkIn', {
+    await axios.post(`${checkBookings}`, {
       bookingId: token,
       name: name.value,
       phone: phone.value,

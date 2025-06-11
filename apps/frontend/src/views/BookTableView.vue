@@ -3,12 +3,13 @@ import Rectangle30 from '@/assets/Rectangle30.png'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import TableItem from "@/components/TableItem.vue";
+import {tables} from "@/constants/links/API.ts";
 
-const tables = ref([])
+const getTables = ref([])
 
 onMounted(async () => {
-  const res = await axios.get('http://localhost:3000/api/tables')
-  tables.value = res.data
+  const res = await axios.get(`${tables}`)
+  getTables.value = res.data
 })
 </script>
 
@@ -22,6 +23,6 @@ onMounted(async () => {
     <hr class="my-4 border-[#F49B33]">
     <h2 class="text-lg font-medium mb-4">Выберите места:</h2>
 
-    <table-item :tables/>
+    <table-item :getTables/>
   </div>
 </template>

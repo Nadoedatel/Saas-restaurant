@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import {bookings, tables} from "@/constants/links/API.ts";
 
 const route = useRoute();
 const tableId = route.params.tableId
@@ -11,15 +12,16 @@ const qrCode = ref('');
 
 const checkQr = async () => {
   try {
-    console.log(tableId)
-    const getToken = await axios.get(`http://localhost:3000/api/tables/${ tableId }`)
-    console.log(getToken.data.token)
-    const getQr = await axios.get(`http://localhost:3000/api/bookings/${ getToken.data.token }`)
-    console.log(getQr)
+
+    const getToken = await axios.get(`${tables}${tableId}`)
+
+    const getQr = await axios.get(`${bookings}${getToken.data.token}`)
+
     const dataInfoUser = await getQr.data
+
     name.value = dataInfoUser.name
     qrCode.value = dataInfoUser.linkQr
-    console.log(qrCode.value)
+
   } catch (error) {
     console.error(error)
   }
@@ -32,6 +34,6 @@ onMounted(() => {
 
 <template>
     <div>
-        <img :src="qrCode">
+      <div v-html="qrCode" class="w-screen h-screen flex items-center justify-center"></div>
     </div>
 </template>

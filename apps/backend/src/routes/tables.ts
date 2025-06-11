@@ -21,4 +21,15 @@ router.get("/:tableId", async (req, res) => {
   }
 })
 
+router.get("/", async (req, res) => {
+  try {
+    const table = await prisma.table.findMany()
+
+    res.json(table)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Ошибка при получении столиков" })
+  }
+})
+
 export default router

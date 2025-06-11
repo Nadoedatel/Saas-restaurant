@@ -29,7 +29,7 @@ function selectTable(table: any) {
 }
 
 const props = defineProps({
-  tables: {
+  getTables: {
     type: Array as () => Table[],
     required: true,
   },
@@ -39,7 +39,7 @@ const props = defineProps({
 <template>
   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 justify-items-center">
     <div
-        v-for="table in props.tables"
+        v-for="table in props.getTables"
         :key="table.id"
         class="flex flex-col items-center justify-center p-4 w-32 h-32 rounded-lg shadow"
         :class="table.isOccupied ? 'bg-red-200 cursor-not-allowed' : 'bg-green-200 hover:bg-green-300 cursor-pointer'"
