@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Импортируем необходимые функции из Vue
-import { computed } from 'vue'
+import {type Component, computed} from 'vue'
 // Импортируем хранилище модальных окон
 import { useModalStore } from '@/stores/modal'
 // Базовый компонент модального окна (обёртка)
@@ -9,11 +9,9 @@ import BaseModal from '@/components/ui/BaseModal.vue'
 // Импортируем компоненты конкретных модальных окон
 import BookTableModal from '@/modals/BookTableModal.vue'
 
-// Тип для названий модальных окон
-type ModalName = 'bookTable'
 
 // Словарь (мапа) для связи названий модалок с их компонентами
-const MODAL_COMPONENTS: Record<ModalName, any> = {
+const MODAL_COMPONENTS: Record<string, Component> = {
   bookTable: BookTableModal,
 }
 

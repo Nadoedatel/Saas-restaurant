@@ -2,7 +2,6 @@
 import busyImage from "@/assets/tableBusy.png";
 import freeImage from "@/assets/tableFree.png";
 import {useModalStore} from "@/stores/modal.ts";
-import router from "@/router";
 
 interface Table {
   id: number;
@@ -11,7 +10,7 @@ interface Table {
 }
 
 const modal = useModalStore()
-async function handleTableClick(table: any) {
+async function handleTableClick(table: Table) {
   if (table.isOccupied) return;
 
   const result = await modal.open('bookTable', {
@@ -22,10 +21,6 @@ async function handleTableClick(table: any) {
   if (result?.success) {
     table.isOccupied = true;
   }
-}
-
-function selectTable(table: any) {
-  router.push({ name: 'bookTable', query: { tableNumber: table.number } })
 }
 
 const props = defineProps({

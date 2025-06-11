@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {RouterView, useRoute} from 'vue-router'
-import Header from './components/layout/Header.vue'
+import HeaderMenu from './components/layout/header-menu.vue'
 import ModalManager from './components/ModalManager.vue';
 import {computed} from "vue";
 
@@ -12,7 +12,7 @@ const shouldHideHeader = computed(() => {
 </script>
 
 <template>
-  <Header v-if="!shouldHideHeader"></Header>
+  <HeaderMenu v-if="!shouldHideHeader" />
   <main class="flex justify-center p-5">
       <RouterView />
   </main>

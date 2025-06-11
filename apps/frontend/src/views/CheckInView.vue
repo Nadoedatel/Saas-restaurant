@@ -24,6 +24,7 @@ const checkIn = async () => {
 
     message.value = 'Бронирование подтверждено!';
   } catch (error) {
+    console.error(error)
     message.value = 'Ошибка подтверждения. Проверьте данные.';
   }
 };
