@@ -15,10 +15,6 @@ app.use('/api/bookings', bookingsRouter)
 app.use('/api/checkIn', checkInRouter) 
 app.use('/api/tables', tablesRouter)
 
-app.get('/api/ping', (_req, res) => {
-  // Простой тестовый эндпоинт для проверки, жив ли сервер
-  res.json({ message: 'pong' })
-})
 
 app.listen(PORT, () => {
   // Запускаем сервер и слушаем указанный порт

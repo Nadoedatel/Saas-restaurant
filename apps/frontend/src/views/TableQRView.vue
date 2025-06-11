@@ -1,34 +1,37 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 
 const route = useRoute();
-const token = route.params.token;
+const tableId = route.params.tableId
 
 const name = ref('');
-const phone = ref('');
-const message = ref('');
+const qrCode = ref('');
 
 const checkQr = async () => {
   try {
-    console.log(token)
-    const response = await axios.post('http://localhost:3000/api/checkIn', {
-      bookingId: token,
-      name: name.value,
-      phone: phone.value,
-    });
-
-    message.value = 'Бронирование подтверждено!';
+    console.log(tableId)
+    const getToken = await axios.get(`http://localhost:3000/api/tables/${ tableId }`)
+    console.log(getToken.data.token)
+    const getQr = await axios.get(`http://localhost:3000/api/bookings/${ getToken.data.token }`)
+    console.log(getQr)
+    const dataInfoUser = await getQr.data
+    name.value = dataInfoUser.name
+    qrCode.value = dataInfoUser.linkQr
+    console.log(qrCode.value)
   } catch (error) {
-    message.value = 'Ошибка подтверждения. Проверьте данные.';
+    console.error(error)
   }
 };
+
+onMounted(() => {
+  checkQr();
+})
 </script>
 
 <template>
     <div>
-        qr-code
-        <button @click="checkIn" class="btn btn-primary w-full">Подтвердить</button>
+        <img :src="qrCode">
     </div>
 </template>
