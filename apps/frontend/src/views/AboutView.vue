@@ -49,9 +49,8 @@ interface NewYorkTimesApiResponse {
   results: articleResult[];
 }
 
-const key = 'Dice4J9RmneDUcys6LHEe2ul7YGPmptD'
-const nameArticle = ref("")
-
+const key: string = 'Dice4J9RmneDUcys6LHEe2ul7YGPmptD'
+let dateNews = ref<NewYorkTimesApiResponse>({status: 'OK', copyright: '', num_results: 0, results: []})
 
 async function receivingNews(): Promise<articleResult[]> {
   const apiUrl = `https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=${key}`
@@ -64,6 +63,7 @@ async function receivingNews(): Promise<articleResult[]> {
     if (apiData.status === 'OK') {
       console.log("Данные успешно получены!");
       console.log(apiData);
+      dateNews.value = apiData
       return apiData.results;
     } else {
       console.warn("API вернуло статус не 'OK' или нет результатов.");
@@ -97,10 +97,26 @@ onMounted(() => {receivingNews()})
 </script>
 
 <template>
-  <div class="flex flex-col p-4">
+  <div v-if="dateNews.results.length > 0" class="flex flex-col p-4">
     <p>Информация о нас!</p>
     <div>
-        Статью предоставила: {{ nameArticle }}
+      <p>Все новости:</p>
+      <div>
+        <div v-for="newsItem in dateNews.results" :key="newsItem.id">
+          <div>{{newsItem.title}}</div> <div>Автор: {{ newsItem.byline || 'Не указан' }}</div>
+          <div>Дата публикации: {{ newsItem.published_date }}</div>
+          <img v-if="newsItem.media && newsItem.media.length > 0 && newsItem.media[0]['media-metadata']"
+               :src="newsItem.media[0]['media-metadata'].find(meta => meta.format === 'Standard Thumbnail')?.url"
+               alt="Thumbnail"
+          >
+        </div>
+      </div>
     </div>
+    <div>
+      Статью предоставила: <br> {{ dateNews.copyright }}
+    </div>
+  </div>
+  <div v-else>
+    Загрузка новостей или новости отсутствуют...
   </div>
 </template>
