@@ -13,10 +13,9 @@ model Booking {
   name      String
   phone     String
   time      DateTime
-  tableNumber Int
-  token       String   @unique @default(uuid()) 
-  isConfirmed Boolean  @default(false)
+  token     String   @unique @default(uuid())
   createdAt DateTime @default(now())
+  linkQr    String
 
   table       Table?    @relation(fields: [tableId], references: [id])
   tableId     Int?

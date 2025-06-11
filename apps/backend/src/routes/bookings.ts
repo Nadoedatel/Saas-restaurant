@@ -15,22 +15,22 @@ router.post("/", async (req, res) => {
     const table = await prisma.table.findUnique({
       where: { number: tableNumber },
     })
-  
+
+    // Генерируем URL для QR-кода (пользователь потом по нему перейдёт)
+    const qrUrl = `http://localhost:5173/checkIn/${table?.token}`
+
+    // Генерируем QR в виде изображения (data URL)
+    const qrCode = await QRCode.toDataURL(qrUrl)
+
     // Создаём запись в базе данных
     const booking = await prisma.booking.create({
-      data: { name, phone, time: parsedTime, tableNumber, token: table?.token, tableId: table?.id, },
+      data: { name: name, phone: phone, time: parsedTime, token: table?.token, linkQr: qrCode, tableId: table?.id },
     })
     
     await prisma.table.update({
       where: { id: table?.id },
       data: { isOccupied: true },
     })
-
-    // Генерируем URL для QR-кода (пользователь потом по нему перейдёт)
-    const qrUrl = `http://localhost:5173/checkIn/${booking.id}`
-
-    // Генерируем QR в виде изображения (data URL)
-    const qrCode = await QRCode.toDataURL(qrUrl)
     // Отправляем обратно созданную запись и QR-код
     res.status(201).json({ booking, qrCode, success: true })
   } catch (e) {
