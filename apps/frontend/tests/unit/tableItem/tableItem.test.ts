@@ -39,4 +39,20 @@ describe("TableItem", () => {
         expect(tableItem[0].text()).toBe('Стол №1');
         expect(tableItem[1].text()).toBe('Стол №2');
     })
+
+    test("renders tableItem server no work", async () => {
+        const getTables = [];
+        const loading = false
+
+        const wrapper = mount(TableItem, {
+            props: {
+                getTables,
+                loading
+            }
+        })
+
+        const tableItem = wrapper.find('div[data-test="tableItemServerNoWork"]')
+
+        expect(tableItem.text()).toBe('Сервер не работает');
+    })
 })

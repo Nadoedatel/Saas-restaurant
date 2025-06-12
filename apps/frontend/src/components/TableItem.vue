@@ -48,7 +48,7 @@ const props = defineProps({
         <div class="text-sm text-gray-600">{{ table.isOccupied ? 'Занят' : 'Свободен' }}</div>
       </div>
     </div>
-    <div v-else>
+    <div data-test="tableItemServerNoWork" v-else>
       <h1>Сервер не работает</h1>
     </div>
   </div>
