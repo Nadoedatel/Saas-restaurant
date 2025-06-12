@@ -44,7 +44,7 @@ const props = defineProps({
             alt="Стол"
             class="w-16 h-16 mb-2"
         />
-        <div>Стол №{{ table.number }}</div>
+        <div data-test="tableItem" >Стол №{{ table.number }}</div>
         <div class="text-sm text-gray-600">{{ table.isOccupied ? 'Занят' : 'Свободен' }}</div>
       </div>
     </div>
