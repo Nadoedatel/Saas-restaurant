@@ -6,10 +6,16 @@ import TableItem from "@/components/TableItem.vue";
 import {tables} from "@/constants/links/API.ts";
 
 const getTables = ref([])
+const loading = ref(false)
 
 onMounted(async () => {
   const res = await axios.get(`${tables}`)
-  getTables.value = res.data
+  if (res) {
+    getTables.value = res.data
+    loading.value = true
+  } else {
+    loading.value = false
+  }
 })
 </script>
 
@@ -23,6 +29,6 @@ onMounted(async () => {
     <hr class="my-4 border-[#F49B33]">
     <h2 class="text-lg font-medium mb-4">Выберите места:</h2>
 
-    <table-item :getTables/>
+    <table-item :getTables :loading/>
   </div>
 </template>

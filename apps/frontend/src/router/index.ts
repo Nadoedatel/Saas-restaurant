@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import BookTableView from '@/views/BookTableView.vue'
 import CheckIn from '@/views/CheckInView.vue'
 import TableQRView from '@/views/TableQRView.vue'
+import AboutView from "@/views/AboutView.vue";
+import PageNotFoundView from "@/views/PageNotFoundView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,10 +17,7 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      component: AboutView,
     },
     {
       path: '/bookTable',
@@ -34,6 +33,11 @@ const router = createRouter({
       path: '/qr/:tableId',
       name: 'qr',
       component: TableQRView,
+    },
+    {
+      path: '/:pathMatch(.*)',
+      name: 'notFound',
+      component: PageNotFoundView,
     }
   ],
 })
