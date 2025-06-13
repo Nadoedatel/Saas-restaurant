@@ -35,6 +35,7 @@ const props = defineProps({
       <div
           v-for="table in props.getTables"
           :key="table.id"
+          :data-testid="`tableItemE2E${table.id}`"
           class="flex flex-col items-center justify-center p-4 w-32 h-32 rounded-lg shadow"
           :class="table.isOccupied ? 'bg-red-200 cursor-not-allowed' : 'bg-green-200 hover:bg-green-300 cursor-pointer'"
           @click="handleTableClick(table)"
@@ -44,11 +45,11 @@ const props = defineProps({
             alt="Стол"
             class="w-16 h-16 mb-2"
         />
-        <div data-test="tableItem" >Стол №{{ table.number }}</div>
-        <div class="text-sm text-gray-600">{{ table.isOccupied ? 'Занят' : 'Свободен' }}</div>
+        <div data-test-unit="tableItem" >Стол №{{ table.number }}</div>
+        <div data-testid="isOccupied" class="text-sm text-gray-600">{{ table.isOccupied ? 'Занят' : 'Свободен' }}</div>
       </div>
     </div>
-    <div data-test="tableItemServerNoWork" v-else>
+    <div data-test-unit="tableItemServerNoWork" v-else>
       <h1>Сервер не работает</h1>
     </div>
   </div>

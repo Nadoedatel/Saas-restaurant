@@ -34,7 +34,7 @@ describe("TableItem", () => {
             }
         })
 
-        const tableItem = wrapper.findAll('div[data-test="tableItem"]')
+        const tableItem = wrapper.findAll('div[data-test-unit="tableItem"]')
 
         expect(tableItem[0].text()).toBe('Стол №1');
         expect(tableItem[1].text()).toBe('Стол №2');
@@ -51,7 +51,7 @@ describe("TableItem", () => {
             }
         })
 
-        const tableItem = wrapper.find('div[data-test="tableItemServerNoWork"]')
+        const tableItem = wrapper.find('div[data-test-unit="tableItemServerNoWork"]')
 
         expect(tableItem.text()).toBe('Сервер не работает');
     })
