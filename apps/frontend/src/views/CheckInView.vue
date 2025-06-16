@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-import MyInput from "@/components/ui/MyInput.vue";
+import MyInput from "@/components/ui/MyInput/MyInput.vue";
 import MyButton from "@/components/ui/Button/MyButton.vue";
 import {checkBookings} from "@/constants/links/API.ts";
 
