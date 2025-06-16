@@ -3,25 +3,24 @@ name: Build, Test, and Deploy
 on:
   push:
     branches:
-      - master # Для одной ветки лучше использовать дефис
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 10.x, 12.x, 14.x ] # Определяем версии Node.js для тестирования
+        node-version: [ 17.x ]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }} # Это имя шага будет меняться для каждой версии
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }} # <-- Вот так нужно брать версию из матрицы
-          cache: 'npm' # Рекомендуется использовать кэширование npm-зависимостей
-          cache-dependency-path: 'apps/frontend/package-lock.json' # Указываем путь к lock-файлу для кэша
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Install modules
         run: npm ci
