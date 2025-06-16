@@ -19,5 +19,6 @@
 <script setup lang="ts">
 defineProps<{
   close: () => void
+  size?: 'small';
 }>()
 </script>

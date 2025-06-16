@@ -4,7 +4,7 @@ import {type Component, computed} from 'vue'
 // Импортируем хранилище модальных окон
 import { useModalStore } from '@/stores/modal'
 // Базовый компонент модального окна (обёртка)
-import BaseModal from '@/components/ui/BaseModal.vue'
+import BaseModal from '@/components/ui/BaseModal/BaseModal.vue'
 
 // Импортируем компоненты конкретных модальных окон
 import BookTableModal from '@/modals/BookTableModal.vue'

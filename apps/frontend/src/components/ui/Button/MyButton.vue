@@ -9,7 +9,7 @@ const props = withDefaults(
       size?: 'small';
       backgroundColor?: string;
     }>(),
-    { primary: false }
+    {primary: false}
 );
 
 const emit = defineEmits<{
@@ -29,5 +29,7 @@ const onClick = () => {
 </script>
 
 <template>
-  <button type="button" :class="classes" @click="onClick" class="border-1 rounded-2xl p-2 bg-amber-300 hover:bg-amber-500">{{ label }}</button>
+  <button type="button" :class="classes" @click="onClick"
+          class="border-1 rounded-2xl p-2 bg-amber-300 hover:bg-amber-500">{{ label }}
+  </button>
 </template>
