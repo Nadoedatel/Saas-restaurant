@@ -1,27 +1,23 @@
-name: Testing P
-run-name: ${{ github.actor }}
-on:
-  push:
-    branches:
-      [ master ]
-    pull_request:
-      branches: [ master ]
 jobs:
-  pinepline:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
-
   steps:
-    - uses: actions/checkout@v4
-    - name: Staring Node.js ${{ matrix.node-version }}
-      uses: actions/step-node@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '16'
     - name: cd frontend
       run: cd .\apps\frontend\
     - name: install modules
       run: npm i
     - name: build pp
       run: npm run dev
+
+
+#  pinepline:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        node-version: [ 17.x ]
