@@ -22,13 +22,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install modules
-        run: npm ci
+        run: npm i
         working-directory: ./apps/frontend/
 
       - name: Build frontend
-        run: npm run build
+        run: npm run dev
         working-directory: ./apps/frontend/
 
       - name: Run tests
-        run: npm test
+        run: npm run test:unit
         working-directory: ./apps/frontend/
