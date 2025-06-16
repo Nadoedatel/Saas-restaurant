@@ -2,8 +2,10 @@ name: Build, Test, and Deploy
 
 on:
   push:
-    branches:
-      - master
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
 
 jobs:
   build:
