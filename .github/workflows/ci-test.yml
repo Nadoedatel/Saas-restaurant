@@ -2,32 +2,34 @@ name: Build, Test, and Deploy
 
 on:
   push:
-    branches:
-      - master # Для одной ветки лучше использовать дефис
+    branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps: # <-- Правильный отступ для steps
+    strategy:
+      matrix:
+        node-version: [ 10.x, 12.x, 14.x ]
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: '16' # Или 'lts/*' для последней LTS версии
+          node-version: '16'
 
       - name: Install modules
-        run: npm ci # 'npm ci' предпочтительнее для CI/CD, так как он гарантирует чистую установку по lock-файлу
-        working-directory: ./apps/frontend/ # <-- Указываем директорию для этого шага
+        run: npm ci
+        working-directory: ./apps/frontend/
 
       - name: Build frontend
-        run: npm run build # <-- Заменяем 'dev' на 'build' для создания продакшн-сборки
-        working-directory: ./apps/frontend/ # <-- Указываем директорию для этого шага
+        run: npm run build
+        working-directory: ./apps/frontend/
 
-      # Дополнительно: Шаг для запуска тестов
+
       - name: Run tests
-        run: npm test # Или другую команду для запуска ваших тестов
+        run: npm test
         working-directory: ./apps/frontend/
 
   # Если вы хотите активировать этот пайплайн позже, уберите символ '#' перед ним.
