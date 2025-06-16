@@ -25,10 +25,6 @@ jobs:
         run: npm ci
         working-directory: ./apps/frontend/
 
-      - name: Build frontend
-        run: npm run dev
-        working-directory: ./apps/frontend/
-
       - name: Run tests
         run: npm run test:unit
         working-directory: ./apps/frontend/
