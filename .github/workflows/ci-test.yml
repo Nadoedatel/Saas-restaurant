@@ -2,22 +2,26 @@ name: Build, Test, and Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master # Для одной ветки лучше использовать дефис
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 10.x, 12.x, 14.x ]
+        node-version: [ 10.x, 12.x, 14.x ] # Определяем версии Node.js для тестирования
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }} # Это имя шага будет меняться для каждой версии
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: ${{ matrix.node-version }} # <-- Вот так нужно брать версию из матрицы
+          cache: 'npm' # Рекомендуется использовать кэширование npm-зависимостей
+          cache-dependency-path: 'apps/frontend/package-lock.json' # Указываем путь к lock-файлу для кэша
 
       - name: Install modules
         run: npm ci
@@ -27,31 +31,6 @@ jobs:
         run: npm run build
         working-directory: ./apps/frontend/
 
-
       - name: Run tests
         run: npm test
         working-directory: ./apps/frontend/
-
-  # Если вы хотите активировать этот пайплайн позже, уберите символ '#' перед ним.
-  # Например, если вам нужна отдельная сборка для Node.js 17.x
-  # pinepline:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [ 17.x ]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #     - name: Set up Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #     - name: Install modules
-  #       run: npm ci
-  #       working-directory: ./apps/frontend/
-  #     - name: Build frontend
-  #       run: npm run build
-  #       working-directory: ./apps/frontend/
-  #     - name: Run tests
-  #       run: npm test
-  #       working-directory: ./apps/frontend/
